@@ -36,3 +36,51 @@
     transform: rotate(360deg);
   }
 }
+
+.FancyBorder-blue {
+  border: 1px blue solid;
+}
+
+.FancyBorder-yellow {
+  border: 1px purple solid;
+  margin: 2px;
+}
+
+.title {
+  margin-bottom: 55px;
+}
+
+#heroDetails {
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+  background-color: rgb(253, 242, 227);
+  border: double 6px rgb(212, 172, 139);
+}
+
+#heroDetails h2 {
+  font-weight: 600;
+  border: #000 1px solid;
+  margin: 55px 2% 0 2%;
+  padding: 2% 0;
+}
+
+#heroDetails ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 2%;
+  margin: 0;
+}
+
+#heroDetails li {
+  list-style-type: none;
+  padding: 2px 5px;
+  width: 33.33%;
+  box-sizing: border-box;
+  border: #000 1px solid;
+}
+
+.heroThumb {
+  width: 200px;
+  border: 6px double rgb(241, 146, 82);
+}
