@@ -1,15 +1,14 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import "../src/App.css";
 
-import DetalleDeHeroe from "./components/DetalleDeHeroe";
-import charactersInfo from "./data/characters.json";
+import App from "./App";
 
 const element = document.getElementById("root");
 const reactElement = (
-  <React.StrictMode>
-    <DetalleDeHeroe heroe={charactersInfo.data.results[8]} />
-  </React.StrictMode>
+  <StrictMode>
+    <App />
+  </StrictMode>
 );
 
 ReactDOM.render(reactElement, element);

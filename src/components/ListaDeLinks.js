@@ -1,26 +1,22 @@
 function ListaDeLinks(props) {
-  console.log(props);
-  const element = props.lista.items.length > 0 && (
+  return props.lista.items.length ? (
     <>
-      <h2>
+      <h3 style={{ backgroundColor: props.colorFondos }}>
         {props.tipo} ({props.lista.available})
-      </h2>
+      </h3>
       <ul>
         {props.lista.items.map((elemento) => {
           return (
             <li key={elemento.name}>
-              <a target="_blank" rel="noreferrer" href={elemento.resourceURI}>
-                {elemento.name}
-              </a>
+              <a href={elemento.resourceURI}>{elemento.name}</a>
             </li>
           );
         })}
       </ul>
-
-      <br />
     </>
+  ) : (
+    <div className="noResults">No hay elementos para mostrar aquí</div>
   );
-  return element;
 }
 
 export default ListaDeLinks;

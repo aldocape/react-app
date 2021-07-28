@@ -1,11 +1,10 @@
 import ListaDeLinks from "./ListaDeLinks";
 
 function DetalleDeHeroe(props) {
-  console.log(props);
   const element = (
-    <div id="heroDetails">
-      <h1 className="title" style={{ textDecoration: "underline" }}>
-        Caracteres de Marvel
+    <>
+      <h1 style={{ color: props.colorLetras }} className="title">
+        Ficha del héroe
       </h1>
 
       <img
@@ -13,13 +12,30 @@ function DetalleDeHeroe(props) {
         src={props.heroe.thumbnail.path + ".jpg"}
         alt={props.heroe.thumbnail.path}
       />
-      <h1>{props.heroe.name}</h1>
+      <h2 style={{ color: props.colorLetras }}>{props.heroe.name}</h2>
 
-      <ListaDeLinks tipo="Comics" lista={props.heroe.comics} />
-      <ListaDeLinks tipo="Series" lista={props.heroe.series} />
-      <ListaDeLinks tipo="Stories" lista={props.heroe.stories} />
+      <ListaDeLinks
+        tipo="Comics"
+        colorFondos={props.colorFondos}
+        lista={props.heroe.comics}
+      />
+      <ListaDeLinks
+        tipo="Series"
+        colorFondos={props.colorFondos}
+        lista={props.heroe.series}
+      />
+      <ListaDeLinks
+        tipo="Stories"
+        colorFondos={props.colorFondos}
+        lista={props.heroe.stories}
+      />
+      <ListaDeLinks
+        tipo="Events"
+        colorFondos={props.colorFondos}
+        lista={props.heroe.events}
+      />
       <br />
-    </div>
+    </>
   );
   return element;
 }
