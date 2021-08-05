@@ -27,6 +27,11 @@
 // }
 
 // import md5 from "js-md5";
+
+import styles from "./App.module.css";
+import classnames from "classnames";
+import themes from "./themes/Themes.module.css";
+
 import React, { useState, useEffect } from "react";
 import DetalleDeHeroe from "./components/DetalleDeHeroe";
 import ListaDeHeroes from "./components/ListaDeHeroes";
@@ -39,7 +44,7 @@ export default function App(props) {
   const [selectedHero, setSelectedHero] = useState(0);
 
   // Selected theme
-  const [selectedTheme, setSelectedTheme] = useState("light");
+  // const [selectedTheme, setSelectedTheme] = useState("light");
 
   // Set Logged in
   const [loggedIn, setLoggedin] = useState(false);
@@ -50,29 +55,40 @@ export default function App(props) {
   // isLoading
   const [heroes, setHeroes] = useState([]);
 
+  // state for Search
+  const [currentSearch, setcurrentSearch] = useState("");
+
   const [isLoading, setisLoading] = useState(false);
   const [first, setFirst] = useState(0);
+  const [code, setCode] = useState("");
 
-  const colorLetras =
-    selectedTheme === "light" ? "rgb(66, 165, 245)" : "rgb(31, 63, 105)";
-  const colorFondos =
-    selectedTheme === "light" ? "rgb(199, 233, 241)" : "rgb(44, 96, 152)";
+  // const colorLetras =
+  //   selectedTheme === "light" ? "rgb(66, 165, 245)" : "rgb(31, 63, 105)";
+  // const colorFondos =
+  //   selectedTheme === "light" ? "rgb(199, 233, 241)" : "rgb(44, 96, 152)";
+
+  const { DarkA, DarkB } = themes;
+  const [theme, setTheme] = useState(themes.DarkA);
 
   // charactersInfo.data.results = [];
 
   useEffect(() => {
     if (isLoading) {
       async function loadHeroes() {
-        const res = await getHeroes(first, 20);
-        console.log("res", res.data.results);
+        const res = await getHeroes(first, 20, currentSearch);
+
         setisLoading(false);
-        const newHeroList = [...heroes, ...res.data.results];
+        let newHeroList = [...heroes];
+        if (res) {
+          if (res.code === 200) newHeroList = [...heroes, ...res.data.results];
+        }
         setHeroes(newHeroList);
+        setCode(res.code);
         setFirst(first + 20);
       }
       loadHeroes();
     }
-  }, [isLoading, first]);
+  }, [isLoading, first, heroes, currentSearch]);
 
   // useEffect(() => {
   //   if (loadMoreHeroes) getHeros();
@@ -95,41 +111,36 @@ export default function App(props) {
   // }
 
   const element = (
-    <div
-      className="container"
-      style={{
-        backgroundColor:
-          selectedTheme === "light"
-            ? "rgb(242, 250, 255)"
-            : "rgb(84, 109, 164)",
-      }}
-    >
-      <div className="divTitle" style={{ backgroundColor: colorFondos }}>
+    <div className={classnames(styles.Container, theme)}>
+      <div className={classnames(styles.DivTitle, theme)}>
         <div className="leftTitle">
-          <h1
-            style={{
-              color: colorLetras,
+          <h1>Caracteres de Marvel</h1>
+          <input
+            type="text"
+            value={currentSearch}
+            onChange={(e) => setcurrentSearch(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              setHeroes([]);
+              setSelectedHero(0);
+              setFirst(0);
+              setisLoading(true);
             }}
           >
-            Caracteres de Marvel
-          </h1>
-          {selectedTheme === "light" ? (
-            <button
-              onClick={() => {
-                setSelectedTheme("dark");
-              }}
-            >
-              Toggle Dark Theme
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                setSelectedTheme("light");
-              }}
-            >
-              Toggle White Theme
-            </button>
-          )}
+            Search
+          </button>
+          <button
+            onClick={() => {
+              if (theme === DarkA) {
+                setTheme(DarkB);
+              } else {
+                setTheme(DarkA);
+              }
+            }}
+          >
+            {theme === DarkA ? "Toggle Light Theme" : "Toggle Dark Theme"}
+          </button>
         </div>
         <div className="rightTitle">
           {loggedIn ? (
@@ -154,45 +165,51 @@ export default function App(props) {
           )}
         </div>
       </div>
-      <div className="listado">
-        {
-          heroes.length ? (
-            <ListaDeHeroes
-              selectedTheme={selectedTheme}
-              lista={heroes}
-              selectedHero={selectedHero}
-              setSelectedHero={setSelectedHero}
-            />
-          ) : (
-            <NoResults isLoading={isLoading} />
-          )
+      <div className="main">
+        <div className="listado">
+          <div className="listaHeroes">
+            {
+              heroes.length ? (
+                <ListaDeHeroes
+                  theme={theme === DarkA ? "Dark" : "Light"}
+                  lista={heroes}
+                  selectedHero={selectedHero}
+                  setSelectedHero={setSelectedHero}
+                />
+              ) : (
+                <NoResults code={code} isLoading={isLoading} />
+              )
 
-          // <div className="noResults">
-          //   &nbsp;&nbsp;Presione el botón "load Heroes" para generar el listado
-          //   desde la API de Marvel
-          // </div>
-        }
-        {isLoading && <div class="spinner"></div>}
-        <button
-          style={{ marginLeft: "15px" }}
-          onClick={() => {
-            setisLoading(!isLoading);
-          }}
-        >
-          Load Heroes
-        </button>
-      </div>
-      <div className="App" id="heroDetails">
-        {heroes.length ? (
-          <DetalleDeHeroe
-            heroe={heroes[selectedHero]}
-            colorLetras={colorLetras}
-            colorFondos={colorFondos}
-          />
-        ) : (
-          <NoResults isLoading={isLoading} />
-        )}
-        {isLoading && <div class="spinner"></div>}
+              // <div className="noResults">
+              //   &nbsp;&nbsp;Presione el botón "load Heroes" para generar el listado
+              //   desde la API de Marvel
+              // </div>
+            }
+          </div>
+
+          <div className="capa-boton">
+            {!isLoading && (
+              <button
+                style={{ marginLeft: "15px" }}
+                onClick={() => {
+                  setisLoading(!isLoading);
+                }}
+              >
+                Load Heroes
+              </button>
+            )}
+            {isLoading && <div className="spinner"></div>}
+          </div>
+        </div>
+        <div className="App" id="heroDetails">
+          {!isLoading &&
+            (heroes.length ? (
+              <DetalleDeHeroe heroe={heroes[selectedHero]} />
+            ) : (
+              <NoResults isLoading={isLoading} />
+            ))}
+          {isLoading && <div className="spinner"></div>}
+        </div>
       </div>
     </div>
   );

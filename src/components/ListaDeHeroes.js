@@ -1,18 +1,18 @@
 import DetalleHeroeLista from "./DetalleHeroeLista";
 
 function ListaDeHeroes(props) {
-  const colorLetras =
-    props.selectedTheme === "light" ? "rgb(66, 165, 245)" : "rgb(31, 63, 105)";
-  const colorFondos =
-    props.selectedTheme === "light" ? "rgb(242, 250, 255)" : "rgb(44, 96, 152)";
   const element = props.lista.length > 0 && (
     <>
-      <h1 style={{ color: colorLetras }}>Listado de héroes</h1>
+      <h1>Listado de héroes</h1>
       <ul>
         {props.lista.map((elemento, i) => {
-          let backCol = colorFondos;
+          let backCol = "";
           if (i === props.selectedHero) {
-            backCol = "lightblue";
+            if (props.theme === "Dark") {
+              backCol = "#251F44";
+            } else {
+              backCol = "#8AB6D6";
+            }
           }
           return (
             <li
@@ -22,7 +22,7 @@ function ListaDeHeroes(props) {
               }}
               key={elemento.name}
             >
-              <DetalleHeroeLista colorLetras={colorLetras} heroe={elemento} />
+              <DetalleHeroeLista heroe={elemento} />
             </li>
           );
         })}

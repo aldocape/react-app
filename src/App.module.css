@@ -1,0 +1,59 @@
+.App {
+  /* width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+
+.App h1,
+h2 {
+  color: var(--theme-color);
+}
+
+a {
+  color: var(--theme-color-a);
+}
+
+div.DivTitle {
+  width: 98%;
+  background-color: rgb(241, 243, 244);
+  margin: 2vh auto;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  color: var(--theme-color);
+  background-color: var(--theme-bgcolor-cont);
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-out;
+}
+div.DivTitle h1 {
+  margin: 15px;
+}
+
+div.DivTitle .leftTitle {
+  width: 50%;
+}
+
+div.DivTitle .rightTitle {
+  width: 48%;
+  text-align: right;
+}
+
+div.Container {
+  /* width: 98%;
+    margin: 1%; */
+  display: flex;
+  /* flex-wrap: wrap;
+    justify-content: space-around; */
+
+  flex-direction: column;
+  min-height: 100vh;
+
+  color: var(--theme-color);
+  background-color: var(--theme-bgcolor);
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-out;
+}

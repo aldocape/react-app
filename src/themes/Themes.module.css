@@ -1,0 +1,38 @@
+/*
+  La pseudo-clase root representa el elemento <html> que es la raíz
+  de todo el documento html.
+  En este caso declaramos unas variables css que por estar declaradas
+  dentro de :root, serán visibles y accesibles por todo el documento.
+*/
+
+:root {
+  /* Theme Dark A*/
+  --dark-a1: #082032;
+  --dark-a2: #393e46;
+  --dark-a3: #3282b8;
+  --dark-a4: #929aab;
+  --dark-a5: #2c394b;
+
+  /* Dark B (https://colorhunt.co/palette/222831393e46ffd369eeeeee) */
+  --dark-b1: #4c4c6d;
+  --dark-b2: #2978b5;
+  --dark-b3: #b8dfd8;
+  --dark-b4: #c9fdd7;
+  --dark-b5: #edf6e5;
+}
+
+.DarkA {
+  --theme-color: var(--dark-a4);
+  --theme-bgcolor: var(--dark-a1);
+  --theme-bgcolor-cont: var(--dark-a2);
+  --theme-color-a: var(--dark-a3);
+  --theme-bgcolor-li: var(--dark-a5);
+}
+
+.DarkB {
+  --theme-color: var(--dark-b1);
+  --theme-bgcolor: var(--dark-b4);
+  --theme-bgcolor-cont: var(--dark-b3);
+  --theme-color-a: var(--dark-b2);
+  --theme-bgcolor-li: var(--dark-b5);
+}
